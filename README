@@ -1,0 +1,7 @@
+#postman working dir. isikelti in.txt
+
+#start app
+mvn spring-boot:run
+
+#run tests
+mvn test -P test

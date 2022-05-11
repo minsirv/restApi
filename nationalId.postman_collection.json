@@ -1,0 +1,218 @@
+{
+	"info": {
+		"_postman_id": "342b9265-de8f-4d3f-b116-ed49ed0ecdf4",
+		"name": "nationalId",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "validate file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file",
+							"src": "in.txt"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://localhost:8080/nationalId/validate/file",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"validate",
+						"file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate single [invalid]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8080/nationalId/validate/38307063773",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"validate",
+						"38307063773"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate single [valid]",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8080/nationalId/validate/30004111598",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"validate",
+						"30004111598"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id [exists]",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.sendRequest({ url: \"https://localhost:8080/nationalId/validate/30004111598\", method: 'POST'}, function (err, response) {});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8080/nationalId/get/30004111598",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"get",
+						"30004111598"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get by id [not found]",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:8080/nationalId/get/39319284118",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"get",
+						"39319284118"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "validate list",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[\r\n    \"30004121397\",\r\n    \"40004173510\",\r\n    \"40004228228\",\r\n    \"40005078410\",\r\n    \"40005197140\",\r\n    \"40005195680\",\r\n    \"48502033998\",\r\n    \"39102046324\",\r\n    \"56712227433\",\r\n    \"54607281217\"\r\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/nationalId/validate/list",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"validate",
+						"list"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"const req = { \r",
+							"    url: \"https://localhost:8080/nationalId/validate/list\", \r",
+							"    method: 'POST',\r",
+							"    header: { 'content-type': 'application/json' },\r",
+							"    body: {\r",
+							"        mode: 'raw',\r",
+							"        raw: JSON.stringify([\"34409157850\", \"44602205109\", \"34608056440\", \"65404197310\", \"55710193990\", \"66609044130\", \"66805096280\"])\r",
+							"    }\r",
+							"}\r",
+							"\r",
+							"pm.sendRequest(req, function (err, response) {\r",
+							"    console.log(response);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"from\": \"1946-01-01\",\r\n    \"to\": \"1950-01-01\"\r\n}\r\n// pre-request populates dates \r\n// 2068-05-09 00:00:00\r\n// 2066-09-04 00:00:00\r\n// 2057-10-19 00:00:00\r\n// 2054-04-19 00:00:00\r\n// 1946-08-05 00:00:00\r\n// 1946-02-20 00:00:00\r\n// 1944-09-15 00:00:00",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:8080/nationalId/search",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"nationalId",
+						"search"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
